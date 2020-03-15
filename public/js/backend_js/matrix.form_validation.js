@@ -1,6 +1,26 @@
 
 $(document).ready(function(){
 	
+	$("#npwd").click(function() {
+		var cpwd = $("#cpwd").val();
+		$.ajax({
+			type:'get',
+			url:'/admin/check-pwd',
+			data: {cpwd:cpwd},
+			success:function(resp) {
+				if(!resp) {
+					$("#pwdChk").html("<font color='red'>Current Password is Incorrect</font>");
+				} else if (resp) {
+					$("#pwdChk").html("<font color='red'>Current Password is Correct</font>");
+				}
+			},
+			error:function() {
+				alert("Error");
+			}
+		});
+	});
+
+
 	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
 	$('select').select2();
@@ -63,7 +83,12 @@ $(document).ready(function(){
 	
 	$("#password_validate").validate({
 		rules:{
-			pwd:{
+			cpwd:{
+				required: true,
+				minlength:6,
+				maxlength:20
+			},
+			npwd:{
 				required: true,
 				minlength:6,
 				maxlength:20
@@ -72,7 +97,7 @@ $(document).ready(function(){
 				required:true,
 				minlength:6,
 				maxlength:20,
-				equalTo:"#pwd"
+				equalTo:"#npwd"
 			}
 		},
 		errorClass: "help-inline",

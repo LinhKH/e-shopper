@@ -19,6 +19,12 @@
                 <strong>{!! session('flash_message_error') !!}</strong>
         </div>
         @endif
+        @if(Session::has('flash_message_success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>	
+                <strong>{!! session('flash_message_success') !!}</strong>
+        </div>
+        @endif
             <form id="loginform" class="form-vertical" method="POST" action="{{ url('admin') }}">
                 {{ csrf_field() }}
 				 <div class="control-group normal_text"> <h3><img src="{{asset('images/backend_images/logo.png') }}" alt="Logo" /></h3></div>
@@ -57,8 +63,9 @@
             </form>
         </div>
         
-        <script src="{{asset('js/backend_js/jquery.min.js') }}"></script>  
-        <script src="{{asset('js/backend_js/matrix.login.js') }}"></script> 
+        <script src="{{asset('js/backend_js/jquery.min.js') }}"></script>
+        <script src="{{asset('js/backend_js/matrix.login.js') }}"></script>
+        <script src="{{asset('js/backend_js/bootstrap.min.js') }}"></script>
     </body>
 
 </html>
