@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Session;
 use App\User;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -39,11 +39,30 @@ class AdminController extends Controller
     public function checkpwd(Request $request) {
         $data = $request->all();
         $current_password = $data['cpwd'];
-        $check_password = User::where(['admin'=>'1'])->firsh();
+        $check_password = User::where(['admin'=>'1'])->first();
         if (Hash::check($current_password,$check_password->password)) {
             echo 'true';die;
         } else {
             echo 'false';die;
+        }
+    }
+
+    public function updatePassword(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $check_password = User::where(['email'=>Auth::user()->email])->first();
+            $current_password = $data['cpwd'];
+
+            if (Hash::check($current_password, $check_password->password)) {
+                // here you know data is valid
+                $password = bcrypt($data['npwd']);
+                User::where('id','1')->update(['password'=>$password]);
+                return redirect('/admin/settings')->with('flash_message_success', 'Password updated successfully.');
+            }else{
+                return redirect('/admin/settings')->with('flash_message_error', 'Current Password entered is incorrect.');
+            }
+
+            
         }
     }
 

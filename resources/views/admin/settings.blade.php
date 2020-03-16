@@ -13,7 +13,19 @@
               <h5>Update Password</h5>
             </div>
             <div class="widget-content nopadding">
-              <form class="form-horizontal" method="get" name="password_validate" id="password_validate" novalidate="novalidate">
+              @if(Session::has('flash_message_error'))
+              <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">×</button>	
+                      <strong>{!! session('flash_message_error') !!}</strong>
+              </div>
+              @endif
+              @if(Session::has('flash_message_success'))
+              <div class="alert alert-success alert-block">
+                  <button type="button" class="close" data-dismiss="alert">×</button>	
+                      <strong>{!! session('flash_message_success') !!}</strong>
+              </div>
+              @endif
+              <form class="form-horizontal" method="post" action="{{ url('/admin/update-pwd') }}" name="password_validate" id="password_validate" novalidate="novalidate">
                 @csrf
                 <div class="control-group">
                   <label class="control-label">Current Password</label>
@@ -34,7 +46,7 @@
                   </div>
                 </div>
                 <div class="form-actions">
-                  <input type="button" value="Update Password" class="btn btn-success">
+                  <input type="submit" value="Update Password" class="btn btn-success">
                 </div>
               </form>
             </div>

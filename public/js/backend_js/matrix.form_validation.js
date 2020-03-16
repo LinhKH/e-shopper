@@ -1,23 +1,24 @@
 
 $(document).ready(function(){
 	
-	$("#npwd").click(function() {
+	$("#cpwd").keyup(function() {
 		var cpwd = $("#cpwd").val();
 		$.ajax({
 			type:'get',
 			url:'/admin/check-pwd',
 			data: {cpwd:cpwd},
 			success:function(resp) {
-				if(!resp) {
-					$("#pwdChk").html("<font color='red'>Current Password is Incorrect</font>");
-				} else if (resp) {
-					$("#pwdChk").html("<font color='red'>Current Password is Correct</font>");
+				if(resp == 'false') {
+					$("#chkPwd").html("<font color='red'>Current Password is Incorrect</font>");
+				} else if (resp == 'true') {
+					$("#chkPwd").html("<font>Current Password is Correct</font>");
 				}
 			},
 			error:function() {
 				alert("Error");
 			}
 		});
+
 	});
 
 
