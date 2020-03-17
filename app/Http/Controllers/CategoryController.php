@@ -8,7 +8,7 @@ use App\Category;
 class CategoryController extends Controller
 {
     public function viewCategories() {
-        $categories = category::get();
+        $categories = Category::get();
         return view('admin.categories.view_categories')->with(compact('categories'));
     }
 
